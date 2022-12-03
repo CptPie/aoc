@@ -1,3 +1,9 @@
-#!/bin/sh
+#!/bin/bash
 cd 2022 || exit
-go run main.go $@
+
+if [[ $* == *"-t"*  ]]; then
+    echo "test mode"
+    go test ./...
+else
+    go run main.go $@
+fi
