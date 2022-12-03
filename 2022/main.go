@@ -14,6 +14,7 @@ type args struct {
 	Submit     bool   `arg:"-s, --submit" help:"Submit calculated results of the provided day"`
 	ConfigPath string `arg:"-c, --config" default:"config.json" help:"Path to the config file. Defaults to config.json"`
 	Download   bool   `arg:"-d,--download" help:"Downloads the puzzle input for [DAY]. If no day is provided it will download all available puzzle inputs"`
+	Test       bool   `arg:"-t, --test"`
 }
 
 func main() {
@@ -27,19 +28,23 @@ func main() {
 func run(args args) {
 
 	for i := 1; i < 25; i++ {
+		fmt.Printf("----- Day %d -----\n", i)
 		if args.Download {
-			err := utils.GetDayInput(i)
+			fmt.Println("Downloading input file")
+			err := utils.GetDayInput(i, args.ConfigPath)
 			if err != nil {
 				fmt.Println(err)
 				return
 			}
 		}
+		fmt.Println("Solving")
 		results, err := solve(i)
 		if err != nil {
 			fmt.Println(err)
 			return
 		}
 		if args.Submit {
+			fmt.Println("Submitting results")
 			err = utils.SubmitSolutions(i, results, args.ConfigPath)
 			if err != nil {
 				fmt.Println(err)

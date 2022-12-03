@@ -11,9 +11,7 @@ func Solve() ([]int, error) {
 	day := 3
 
 	results := []int{}
-
-	fmt.Println("----- Day 3 -----")
-
+	
 	solution, err := solvePart1(day)
 
 	if err != nil && err.Error() != "Not implemented" {

@@ -54,9 +54,8 @@ func GetConfig(path string) (Config, error) {
 }
 
 func SubmitSolutions(day int, results []int, configPath string) error {
-	fmt.Printf("Submitting results for day %d\n", day)
 	for part, result := range results {
-		err := PostSolution(configPath, day, part+1, result)
+		err := postSolution(configPath, day, part+1, result)
 		if err != nil {
 			fmt.Println(err)
 		}
@@ -64,7 +63,7 @@ func SubmitSolutions(day int, results []int, configPath string) error {
 	return nil
 }
 
-func PostSolution(configPath string, day int, part int, solution int) error {
+func postSolution(configPath string, day int, part int, solution int) error {
 
 	config, err := GetConfig(configPath)
 
@@ -96,8 +95,8 @@ func PostSolution(configPath string, day int, part int, solution int) error {
 
 }
 
-func GetDayInput(day int) error {
-	config, err := GetConfig("config.json")
+func GetDayInput(day int, path string) error {
+	config, err := GetConfig(path)
 
 	if err != nil {
 		return err

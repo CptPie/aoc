@@ -12,8 +12,6 @@ func Solve() ([]int, error) {
 
 	var results []int
 
-	fmt.Println("----- Day 1 -----")
-
 	solution, err := solvePart1(day)
 
 	if err != nil {
