@@ -3,6 +3,8 @@ package main
 import (
 	"fmt"
 	"os/exec"
+	"strconv"
+	"time"
 
 	"github.com/alexflint/go-arg"
 )
@@ -18,6 +20,28 @@ func main() {
 	var args args
 
 	arg.MustParse(&args)
+
+	year := time.Now().Year()
+
+	if len(fmt.Sprintf("%d", args.Year)) == 2 {
+		// shorthand
+		var err error
+		args.Year, err = strconv.Atoi(fmt.Sprintf("20%d", args.Year))
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+	}
+
+	if args.Year > year {
+		fmt.Println("We are not time travelers ... yet. Year is in the future")
+		return
+	}
+
+	if args.Year < 2015 {
+		fmt.Println("No AoC puzzles prior to 2015.")
+		return
+	}
 
 	dl := ""
 	if args.Download {
