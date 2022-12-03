@@ -1,7 +1,6 @@
 package day02
 
 import (
-	"2022/utils"
 	"errors"
 	"fmt"
 	"strings"
@@ -19,12 +18,10 @@ import (
 
 // Win: 6, Draw: 3, Loss: 0
 
-func Solve() ([]int, error) {
-	day := 2
+func Solve(fileContents []string) ([]int, error) {
+	var results []int
 
-	results := []int{}
-
-	solution, err := solvePart1(day)
+	solution, err := solvePart1(fileContents)
 
 	if err != nil {
 		return nil, err
@@ -34,7 +31,7 @@ func Solve() ([]int, error) {
 
 	fmt.Printf("Part 1 Solution: %v\n", solution)
 
-	solution, err = solvePart2(day)
+	solution, err = solvePart2(fileContents)
 
 	if err != nil && err.Error() != "Not implemented" {
 		return nil, err
@@ -47,16 +44,9 @@ func Solve() ([]int, error) {
 
 }
 
-func solvePart1(day int) (int, error) {
-	fileScanner, err := utils.ReadFile(day)
-
-	if err != nil {
-		return 0, err
-	}
-
+func solvePart1(fileContents []string) (int, error) {
 	sum := 0
-	for fileScanner.Scan() {
-		line := fileScanner.Text()
+	for _, line := range fileContents {
 		res, err := parsePart1(line)
 		if err != nil {
 			return 0, err
@@ -66,16 +56,10 @@ func solvePart1(day int) (int, error) {
 	return sum, nil
 }
 
-func solvePart2(day int) (int, error) {
-	fileScanner, err := utils.ReadFile(day)
-
-	if err != nil {
-		return 0, err
-	}
-
+func solvePart2(fileContents []string) (int, error) {
 	sum := 0
-	for fileScanner.Scan() {
-		line := fileScanner.Text()
+	for _, line := range fileContents {
+
 		res, err := parsePart2(line)
 		if err != nil {
 			return 0, err

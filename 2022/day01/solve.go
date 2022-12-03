@@ -1,18 +1,16 @@
 package day01
 
 import (
-	"2022/utils"
 	"fmt"
 	"sort"
 	"strconv"
 )
 
-func Solve() ([]int, error) {
-	day := 1
+func Solve(fileContents []string) ([]int, error) {
 
 	var results []int
 
-	solution, err := solvePart1(day)
+	solution, err := solvePart1(fileContents)
 
 	if err != nil {
 		return nil, err
@@ -22,7 +20,7 @@ func Solve() ([]int, error) {
 
 	fmt.Printf("Part 1 Solution: %v\n", solution)
 
-	solution, err = solvePart2(day)
+	solution, err = solvePart2(fileContents)
 
 	if err != nil {
 		return nil, err
@@ -34,19 +32,13 @@ func Solve() ([]int, error) {
 	return results, nil
 }
 
-func solvePart1(day int) (int, error) {
-
-	fileScanner, err := utils.ReadFile(day)
-
-	if err != nil {
-		return 0, err
-	}
+func solvePart1(fileContents []string) (int, error) {
 
 	maxSum := 0
 	var values []int
-	for fileScanner.Scan() {
+	for _, line := range fileContents {
 
-		if fileScanner.Text() == "" {
+		if line == "" {
 			sum := 0
 			for _, v := range values {
 				sum += v
@@ -58,7 +50,7 @@ func solvePart1(day int) (int, error) {
 
 			values = []int{}
 		} else {
-			value, err := strconv.Atoi(fileScanner.Text())
+			value, err := strconv.Atoi(line)
 			if err != nil {
 				return 0, err
 			}
@@ -71,18 +63,13 @@ func solvePart1(day int) (int, error) {
 
 }
 
-func solvePart2(day int) (int, error) {
-	fileScanner, err := utils.ReadFile(day)
-
-	if err != nil {
-		return 0, err
-	}
+func solvePart2(fileContents []string) (int, error) {
 
 	var sums []int
 	var values []int
-	for fileScanner.Scan() {
+	for _, line := range fileContents {
 
-		if fileScanner.Text() == "" {
+		if line == "" {
 			sum := 0
 			for _, v := range values {
 				sum += v
@@ -92,7 +79,7 @@ func solvePart2(day int) (int, error) {
 
 			values = []int{}
 		} else {
-			value, err := strconv.Atoi(fileScanner.Text())
+			value, err := strconv.Atoi(line)
 			if err != nil {
 				return 0, err
 			}

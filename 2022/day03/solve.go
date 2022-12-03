@@ -1,18 +1,15 @@
 package day03
 
 import (
-	"2022/utils"
 	"fmt"
 	"strings"
 	"unicode"
 )
 
-func Solve() ([]int, error) {
-	day := 3
+func Solve(fileContents []string) ([]int, error) {
+	var results []int
 
-	results := []int{}
-	
-	solution, err := solvePart1(day)
+	solution, err := solvePart1(fileContents)
 
 	if err != nil && err.Error() != "Not implemented" {
 		return nil, err
@@ -22,7 +19,7 @@ func Solve() ([]int, error) {
 
 	fmt.Printf("Part 1 Solution: %v\n", solution)
 
-	solution, err = solvePart2(day)
+	solution, err = solvePart2(fileContents)
 
 	if err != nil && err.Error() != "Not implemented" {
 		return nil, err
@@ -35,22 +32,15 @@ func Solve() ([]int, error) {
 
 }
 
-func solvePart1(day int) (int, error) {
-	fileScanner, err := utils.ReadFile(day)
-	_, _ = fileScanner, err
-
-	if err != nil {
-		return 0, err
-	}
-
+func solvePart1(fileContents []string) (int, error) {
 	sum := 0
-	for fileScanner.Scan() {
-		line := fileScanner.Text()
+	for _, line := range fileContents {
 		value, err := day3CalculateLinePart1(line)
 
 		if err != nil {
 			return 0, err
 		}
+
 		sum += value
 	}
 
@@ -70,19 +60,10 @@ func day3CalculateLinePart1(line string) (int, error) {
 	return 0, nil
 }
 
-func solvePart2(day int) (int, error) {
-
-	fileScanner, err := utils.ReadFile(day)
-	_, _ = fileScanner, err
-
-	if err != nil {
-		return 0, err
-	}
-
+func solvePart2(fileContents []string) (int, error) {
 	sum := 0
 	lines := []string{}
-	for fileScanner.Scan() {
-		line := fileScanner.Text()
+	for _, line := range fileContents {
 		lines = append(lines, line)
 		if len(lines) == 3 {
 			// third pack of the group

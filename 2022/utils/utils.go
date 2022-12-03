@@ -19,7 +19,7 @@ type Config struct {
 	Token string `json:"token"`
 }
 
-func ReadFile(day int) (*bufio.Scanner, error) {
+func ReadFile(day int) ([]string, error) {
 	file, err := os.Open(fmt.Sprintf("day%02d/input", day))
 
 	if err != nil {
@@ -30,7 +30,12 @@ func ReadFile(day int) (*bufio.Scanner, error) {
 
 	fileScanner.Split(bufio.ScanLines)
 
-	return fileScanner, nil
+	var contents []string
+	for fileScanner.Scan() {
+		contents = append(contents, fileScanner.Text())
+	}
+
+	return contents, nil
 }
 
 func GetConfig(path string) (Config, error) {

@@ -58,11 +58,23 @@ func solve(day int) ([]int, error) {
 	var err error
 	switch day {
 	case 1:
-		return day01.Solve()
+		contents, err := utils.ReadFile(day)
+		if err != nil {
+			return nil, err
+		}
+		return day01.Solve(contents)
 	case 2:
-		return day02.Solve()
+		contents, err := utils.ReadFile(day)
+		if err != nil {
+			return nil, err
+		}
+		return day02.Solve(contents)
 	case 3:
-		return day03.Solve()
+		contents, err := utils.ReadFile(day)
+		if err != nil {
+			return nil, err
+		}
+		return day03.Solve(contents)
 	case 4:
 		err = errors.New("solve for day 4 not implemented")
 	case 5:
