@@ -1,0 +1,114 @@
+package main
+
+import (
+	"2022/day01"
+	"2022/day02"
+	"2022/day03"
+	"2022/utils"
+	"errors"
+	"fmt"
+	"github.com/alexflint/go-arg"
+)
+
+type args struct {
+	Submit     bool   `arg:"-s, --submit" help:"Submit calculated results of the provided day"`
+	ConfigPath string `arg:"-c, --config" default:"config.json" help:"Path to the config file. Defaults to config.json"`
+	Download   bool   `arg:"-d,--download" help:"Downloads the puzzle input for [DAY]. If no day is provided it will download all available puzzle inputs"`
+}
+
+func main() {
+	var args args
+
+	arg.MustParse(&args)
+
+	run(args)
+}
+
+func run(args args) {
+
+	for i := 1; i < 25; i++ {
+		if args.Download {
+			err := utils.GetDayInput(i)
+			if err != nil {
+				fmt.Println(err)
+				return
+			}
+		}
+		results, err := solve(i)
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+		if args.Submit {
+			err = utils.SubmitSolutions(i, results, args.ConfigPath)
+			if err != nil {
+				fmt.Println(err)
+				return
+			}
+		}
+	}
+}
+
+func solve(day int) ([]int, error) {
+	var err error
+	switch day {
+	case 1:
+		return day01.Solve()
+	case 2:
+		return day02.Solve()
+	case 3:
+		return day03.Solve()
+	case 4:
+		err = errors.New("solve for day 4 not implemented")
+	case 5:
+		err = errors.New("solve for day 5 not implemented")
+	case 6:
+		err = errors.New("solve for day 6 not implemented")
+	case 7:
+		err = errors.New("solve for day 7 not implemented")
+	case 8:
+		err = errors.New("solve for day 8 not implemented")
+	case 9:
+		err = errors.New("solve for day 9 not implemented")
+	case 10:
+		err = errors.New("solve for day 10 not implemented")
+	case 11:
+		err = errors.New("solve for day 11 not implemented")
+	case 12:
+		err = errors.New("solve for day 12 not implemented")
+	case 13:
+		err = errors.New("solve for day 13 not implemented")
+	case 14:
+		err = errors.New("solve for day 14 not implemented")
+	case 15:
+		err = errors.New("solve for day 15 not implemented")
+	case 16:
+		err = errors.New("solve for day 16 not implemented")
+	case 17:
+		err = errors.New("solve for day 17 not implemented")
+	case 18:
+		err = errors.New("solve for day 18 not implemented")
+	case 19:
+		err = errors.New("solve for day 19 not implemented")
+	case 20:
+		err = errors.New("solve for day 20 not implemented")
+	case 21:
+		err = errors.New("solve for day 21 not implemented")
+	case 22:
+		err = errors.New("solve for day 22 not implemented")
+	case 23:
+		err = errors.New("solve for day 23 not implemented")
+	case 24:
+		err = errors.New("solve for day 24 not implemented")
+	case 25:
+		err = errors.New("solve for day 25 not implemented")
+	default:
+		if day < 0 || day > 25 {
+			return nil, errors.New("day out of bounds")
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	return nil, nil
+}
