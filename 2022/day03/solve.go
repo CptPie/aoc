@@ -1,6 +1,7 @@
 package day03
 
 import (
+	"errors"
 	"fmt"
 	"strings"
 	"unicode"
@@ -48,6 +49,10 @@ func solvePart1(fileContents []string) (int, error) {
 }
 func day3CalculateLinePart1(line string) (int, error) {
 
+	if len(line)%2 != 0 {
+		return 0, errors.New("Line is not even")
+	}
+
 	compartment1 := line[0 : len(line)/2]
 	compartment2 := line[len(line)/2:]
 
@@ -63,6 +68,9 @@ func day3CalculateLinePart1(line string) (int, error) {
 func solvePart2(fileContents []string) (int, error) {
 	sum := 0
 	lines := []string{}
+	if len(fileContents)%3 != 0 {
+		return 0, errors.New("Input file not divisible by 3")
+	}
 	for _, line := range fileContents {
 		lines = append(lines, line)
 		if len(lines) == 3 {
