@@ -4,9 +4,11 @@ import (
 	"2022/day01"
 	"2022/day02"
 	"2022/day03"
+	"2022/day04"
 	"2022/utils"
 	"errors"
 	"fmt"
+
 	"github.com/alexflint/go-arg"
 )
 
@@ -56,27 +58,19 @@ func run(args args) {
 
 func solve(day int) ([]int, error) {
 	var err error
+	contents, err := utils.ReadFile(day)
+	if err != nil {
+		return nil, err
+	}
 	switch day {
 	case 1:
-		contents, err := utils.ReadFile(day)
-		if err != nil {
-			return nil, err
-		}
 		return day01.Solve(contents)
 	case 2:
-		contents, err := utils.ReadFile(day)
-		if err != nil {
-			return nil, err
-		}
 		return day02.Solve(contents)
 	case 3:
-		contents, err := utils.ReadFile(day)
-		if err != nil {
-			return nil, err
-		}
 		return day03.Solve(contents)
 	case 4:
-		err = errors.New("solve for day 4 not implemented")
+		return day04.Solve(contents)
 	case 5:
 		err = errors.New("solve for day 5 not implemented")
 	case 6:
