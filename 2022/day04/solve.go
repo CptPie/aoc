@@ -115,20 +115,10 @@ func solvePart2(fileContents []string) (int, error) {
 }
 
 func sliceContainsContent(A []int, B []int) bool {
-	if len(A) > len(B) {
-		for _, e := range B {
-			if slices.Contains(A, e) {
-				return true
-			}
+	for _, e := range A {
+		if slices.Contains(B, e) {
+			return true
 		}
-		return false
-
-	} else {
-		for _, e := range A {
-			if slices.Contains(B, e) {
-				return true
-			}
-		}
-		return false
 	}
+	return false
 }
