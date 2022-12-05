@@ -1,7 +1,7 @@
 package day05
 
 import (
-	"errors"
+	"2022/utils"
 	"fmt"
 	"strconv"
 	"strings"
@@ -31,36 +31,6 @@ func Solve(fileContents []string) ([]string, error) {
 	fmt.Printf("Part 2 Solution: %v\n", solution)
 	return results, nil
 
-}
-
-type Stack struct {
-	top      int
-	Contents []string
-}
-
-func (s *Stack) Push(elem string) {
-	if s.Contents == nil {
-		s.Contents = []string{}
-	}
-	s.top++
-	s.Contents = append(s.Contents, elem)
-}
-
-func (s *Stack) Pop() (string, error) {
-	if len(s.Contents) == 0 {
-		return "", errors.New("Stack empty")
-	}
-	last := len(s.Contents) - 1
-	elem := s.Contents[last]
-	s.Contents = s.Contents[:last]
-	return elem, nil
-}
-
-func (s *Stack) Peek() (string, error) {
-	if len(s.Contents) == 0 {
-		return "", errors.New("Stack empty")
-	}
-	return s.Contents[len(s.Contents)-1], nil
 }
 
 func solvePart1(fileContents []string) (string, error) {
@@ -99,7 +69,7 @@ func solvePart1(fileContents []string) (string, error) {
 	return res, nil
 }
 
-func runInstuctionsPart1(state map[int]Stack, instructions []string) (map[int]Stack, error) {
+func runInstuctionsPart1(state map[int]utils.Stack, instructions []string) (map[int]utils.Stack, error) {
 	for _, line := range instructions {
 		parts := strings.Split(line, " ")
 		amount, _ := strconv.Atoi(parts[1])
@@ -118,7 +88,7 @@ func runInstuctionsPart1(state map[int]Stack, instructions []string) (map[int]St
 	return state, nil
 }
 
-func runInstuctionsPart2(state map[int]Stack, instructions []string) (map[int]Stack, error) {
+func runInstuctionsPart2(state map[int]utils.Stack, instructions []string) (map[int]utils.Stack, error) {
 	for _, line := range instructions {
 		parts := strings.Split(line, " ")
 		amount, _ := strconv.Atoi(parts[1])
@@ -137,25 +107,25 @@ func runInstuctionsPart2(state map[int]Stack, instructions []string) (map[int]St
 	return state, nil
 }
 
-func moveCrateMover9000(src Stack, dst Stack, amount int) (Stack, Stack, error) {
+func moveCrateMover9000(src utils.Stack, dst utils.Stack, amount int) (utils.Stack, utils.Stack, error) {
 	for i := 0; i < amount; i++ {
 		elem, err := src.Pop()
 		if err != nil {
-			return Stack{}, Stack{}, err
+			return utils.Stack{}, utils.Stack{}, err
 		}
 		dst.Push(elem)
 	}
 	return src, dst, nil
 }
 
-func moveCrateMover9001(src Stack, dst Stack, amount int) (Stack, Stack, error) {
+func moveCrateMover9001(src utils.Stack, dst utils.Stack, amount int) (utils.Stack, utils.Stack, error) {
 
-	helper := Stack{}
+	helper := utils.Stack{}
 
 	for i := 0; i < amount; i++ {
 		elem, err := src.Pop()
 		if err != nil {
-			return Stack{}, Stack{}, err
+			return utils.Stack{}, utils.Stack{}, err
 		}
 		helper.Push(elem)
 	}
@@ -163,22 +133,21 @@ func moveCrateMover9001(src Stack, dst Stack, amount int) (Stack, Stack, error) 
 	for i := 0; i < amount; i++ {
 		elem, err := helper.Pop()
 		if err != nil {
-			return Stack{}, Stack{}, err
+			return utils.Stack{}, utils.Stack{}, err
 		}
 		dst.Push(elem)
 	}
 	return src, dst, nil
 }
 
-func parseState(state []string) map[int]Stack {
+func parseState(state []string) map[int]utils.Stack {
 	// Detect how many stacks we need
 	maxCols := len(strings.Split(state[len(state)-1], "   "))
 
 	// Prepare map to save the stacks
-	res := make(map[int]Stack)
+	res := make(map[int]utils.Stack)
 	for i := 1; i <= maxCols; i++ {
-		res[i] = Stack{
-			top:      0,
+		res[i] = utils.Stack{
 			Contents: []string{},
 		}
 	}
