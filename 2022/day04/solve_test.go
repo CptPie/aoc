@@ -1,11 +1,20 @@
 package day04
 
-import "testing"
+import (
+	"2022/utils"
+	"testing"
+)
 
 func Test_solvePart1(t *testing.T) {
 	type args struct {
 		fileContents []string
 	}
+
+	input, err := utils.ReadFile("test_input")
+	if err != nil {
+		t.Fail()
+	}
+
 	tests := []struct {
 		name    string
 		args    args
@@ -13,30 +22,10 @@ func Test_solvePart1(t *testing.T) {
 		wantErr bool
 	}{
 		{
-			name: "Part1 - should return 2",
-			args: args{[]string{
-				"2-4,6-8",
-				"2-3,4-5",
-				"5-7,7-9",
-				"2-8,3-7",
-				"6-6,4-6",
-				"2-6,4-8",
-			}},
+			name:    "Part1 - should return 2",
+			args:    args{input},
 			want:    2,
 			wantErr: false,
-		},
-		{
-			name: "Part1 - should return error",
-			args: args{[]string{
-				"2-4,6-8",
-				"2-3,4-5",
-				"5-7,7-9",
-				"2-8,37",
-				"6-6,4-6",
-				"2-6,4-8",
-			}},
-			want:    0,
-			wantErr: true,
 		},
 	}
 	for _, tt := range tests {
@@ -57,6 +46,12 @@ func Test_solvePart2(t *testing.T) {
 	type args struct {
 		fileContents []string
 	}
+
+	input, err := utils.ReadFile("test_input")
+	if err != nil {
+		t.Fail()
+	}
+
 	tests := []struct {
 		name    string
 		args    args
@@ -64,30 +59,10 @@ func Test_solvePart2(t *testing.T) {
 		wantErr bool
 	}{
 		{
-			name: "Part2 - should return 4",
-			args: args{[]string{
-				"2-4,6-8",
-				"2-3,4-5",
-				"5-7,7-9",
-				"2-8,3-7",
-				"6-6,4-6",
-				"2-6,4-8",
-			}},
+			name:    "Part2 - should return 4",
+			args:    args{input},
 			want:    4,
 			wantErr: false,
-		},
-		{
-			name: "Part2 - should return error",
-			args: args{[]string{
-				"2-4,6-8",
-				"2-3,4-5",
-				"5-7,7-9",
-				"2-8,37",
-				"6-6,4-6",
-				"2-6,4-8",
-			}},
-			want:    0,
-			wantErr: true,
 		},
 	}
 	for _, tt := range tests {

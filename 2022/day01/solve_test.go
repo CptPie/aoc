@@ -1,65 +1,31 @@
 package day01
 
-import "testing"
+import (
+	"2022/utils"
+	"testing"
+)
 
 func Test_solvePart1(t *testing.T) {
 	type args struct {
 		fileContents []string
 	}
+
+	input, err := utils.ReadFile("test_input")
+	if err != nil {
+		t.Fail()
+	}
+
 	tests := []struct {
 		name    string
 		args    args
 		want    int
 		wantErr bool
 	}{
-		// TODO: Add test cases.
 		{
-			name:    "First Elf Sum",
-			args:    args{[]string{"1000", "2000", "3000", ""}},
-			want:    6000,
-			wantErr: false,
-		},
-		{
-			name: "Find maximal Sum",
-			args: args{[]string{
-				"1000",
-				"2000",
-				"3000",
-				"",
-				"4000",
-				"",
-				"5000",
-				"6000",
-				"",
-				"7000",
-				"8000",
-				"9000",
-				"",
-				"10000",
-				""}},
+			name:    "Find maximal Sum",
+			args:    args{input},
 			want:    24000,
 			wantErr: false,
-		},
-		{
-			name: "Fail with input error",
-			args: args{[]string{
-				"1000",
-				"2000",
-				"3000",
-				"",
-				"4000j",
-				"",
-				"5000",
-				"6000",
-				"",
-				"7000",
-				"8000",
-				"9000",
-				"",
-				"10000",
-				""}},
-			want:    0,
-			wantErr: true,
 		},
 	}
 	for _, tt := range tests {
@@ -80,54 +46,23 @@ func Test_solvePart2(t *testing.T) {
 	type args struct {
 		fileContents []string
 	}
+
+	input, err := utils.ReadFile("test_input")
+	if err != nil {
+		t.Fail()
+	}
+
 	tests := []struct {
 		name    string
 		args    args
 		want    int
 		wantErr bool
 	}{
-		// TODO: Add test cases.
 		{
-			name: "Sum of 3 max sums",
-			args: args{[]string{
-				"1000",
-				"2000",
-				"3000",
-				"",
-				"4000",
-				"",
-				"5000",
-				"6000",
-				"",
-				"7000",
-				"8000",
-				"9000",
-				"",
-				"10000",
-				""}},
+			name:    "Sum of 3 max sums",
+			args:    args{input},
 			want:    45000,
 			wantErr: false,
-		},
-		{
-			name: "Fail with input error",
-			args: args{[]string{
-				"1000",
-				"2000",
-				"3000",
-				"",
-				"4000j",
-				"",
-				"5000",
-				"6000",
-				"",
-				"7000",
-				"8000",
-				"9000",
-				"",
-				"10000",
-				""}},
-			want:    0,
-			wantErr: true,
 		},
 	}
 	for _, tt := range tests {

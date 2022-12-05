@@ -1,11 +1,20 @@
 package day03
 
-import "testing"
+import (
+	"2022/utils"
+	"testing"
+)
 
 func Test_solvePart1(t *testing.T) {
 	type args struct {
 		fileContents []string
 	}
+
+	input, err := utils.ReadFile("test_input")
+	if err != nil {
+		t.Fail()
+	}
+
 	tests := []struct {
 		name    string
 		args    args
@@ -13,30 +22,10 @@ func Test_solvePart1(t *testing.T) {
 		wantErr bool
 	}{
 		{
-			name: "Part1 - should return 157",
-			args: args{[]string{
-				"vJrwpWtwJgWrhcsFMMfFFhFp",
-				"jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL",
-				"PmmdzqPrVvPwwTWBwg",
-				"wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn",
-				"ttgJtRGJQctTZtZT",
-				"CrZsJsPPZsGzwwsLwLmpwMDw",
-			}},
+			name:    "Part1 - should return 157",
+			args:    args{input},
 			want:    157,
 			wantErr: false,
-		},
-		{
-			name: "Part1 - should return error",
-			args: args{[]string{
-				"vJrwpWtwJgWrhcsFMMfFFhFp",
-				"jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsS",
-				"PmmdzqPrVvPwwTWBwg",
-				"wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn",
-				"ttgJtRGJQctTZtZT",
-				"CrZsJsPPZsGzwwsLwLmpwMDw",
-			}},
-			want:    0,
-			wantErr: true,
 		},
 	}
 	for _, tt := range tests {
@@ -57,6 +46,12 @@ func Test_solvePart2(t *testing.T) {
 	type args struct {
 		fileContents []string
 	}
+
+	input, err := utils.ReadFile("test_input")
+	if err != nil {
+		t.Fail()
+	}
+
 	tests := []struct {
 		name    string
 		args    args
@@ -64,29 +59,10 @@ func Test_solvePart2(t *testing.T) {
 		wantErr bool
 	}{
 		{
-			name: "Part2 - should return 157",
-			args: args{[]string{
-				"vJrwpWtwJgWrhcsFMMfFFhFp",
-				"jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL",
-				"PmmdzqPrVvPwwTWBwg",
-				"wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn",
-				"ttgJtRGJQctTZtZT",
-				"CrZsJsPPZsGzwwsLwLmpwMDw",
-			}},
+			name:    "Part2 - should return 157",
+			args:    args{input},
 			want:    70,
 			wantErr: false,
-		},
-		{
-			name: "Part2 - should return error",
-			args: args{[]string{
-				"vJrwpWtwJgWrhcsFMMfFFhFp",
-				"jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsS",
-				"PmmdzqPrVvPwwTWBwg",
-				"wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn",
-				"ttgJtRGJQctTZtZT",
-			}},
-			want:    0,
-			wantErr: true,
 		},
 	}
 	for _, tt := range tests {
