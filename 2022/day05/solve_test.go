@@ -74,7 +74,7 @@ func Test_solvePart2(t *testing.T) {
 		t.Errorf(err.Error())
 	}
 
-	input, err := utils.ReadFile("test_input")
+	input, err := utils.ReadFile("input")
 	if err != nil {
 		t.Errorf(err.Error())
 	}
