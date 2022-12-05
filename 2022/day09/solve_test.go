@@ -1,11 +1,20 @@
 package day09
 
-import "testing"
+import (
+	"2022/utils"
+	"testing"
+)
 
 func Test_solvePart1(t *testing.T) {
 	type args struct {
 		fileContents []string
 	}
+
+	input, err := utils.ReadFile("test_input")
+	if err != nil {
+		t.Fail()
+	}
+
 	tests := []struct {
 		name    string
 		args    args
@@ -13,20 +22,10 @@ func Test_solvePart1(t *testing.T) {
 		wantErr bool
 	}{
 		{
-			name: "Part1 - should return",
-			args: args{[]string{
-				"",
-			}},
+			name:    "Part1 - should return",
+			args:    args{input},
 			want:    0,
 			wantErr: false,
-		},
-		{
-			name: "Part1 - should return error",
-			args: args{[]string{
-				"",
-			}},
-			want:    0,
-			wantErr: true,
 		},
 	}
 	for _, tt := range tests {
@@ -47,6 +46,12 @@ func Test_solvePart2(t *testing.T) {
 	type args struct {
 		fileContents []string
 	}
+
+	input, err := utils.ReadFile("test_input")
+	if err != nil {
+		t.Fail()
+	}
+
 	tests := []struct {
 		name    string
 		args    args
@@ -54,20 +59,10 @@ func Test_solvePart2(t *testing.T) {
 		wantErr bool
 	}{
 		{
-			name: "Part2 - should return ",
-			args: args{[]string{
-				"",
-			}},
+			name:    "Part2 - should return ",
+			args:    args{input},
 			want:    0,
 			wantErr: false,
-		},
-		{
-			name: "Part2 - should return error",
-			args: args{[]string{
-				"",
-			}},
-			want:    0,
-			wantErr: true,
 		},
 	}
 	for _, tt := range tests {
