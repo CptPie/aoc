@@ -1,32 +1,40 @@
 package day05
 
-import "testing"
+import (
+	"2022/utils"
+	"testing"
+)
 
 func Test_solvePart1(t *testing.T) {
 	type args struct {
 		fileContents []string
 	}
+	input, err := utils.ReadFile("test_input")
+	if err != nil {
+		t.Fail()
+	}
+	input2, err := utils.ReadFile("test_input_2")
+	if err != nil {
+		t.Fail()
+	}
+
 	tests := []struct {
 		name    string
 		args    args
-		want    int
+		want    string
 		wantErr bool
 	}{
 		{
-			name: "Part1 - should return",
-			args: args{[]string{
-				"",
-			}},
-			want:    0,
+			name:    "Simple",
+			args:    args{input},
+			want:    "CMZ",
 			wantErr: false,
 		},
 		{
-			name: "Part1 - should return error",
-			args: args{[]string{
-				"",
-			}},
-			want:    0,
-			wantErr: true,
+			name:    "Complex",
+			args:    args{input2},
+			want:    "MPQFNHSTN",
+			wantErr: false,
 		},
 	}
 	for _, tt := range tests {
@@ -47,27 +55,21 @@ func Test_solvePart2(t *testing.T) {
 	type args struct {
 		fileContents []string
 	}
+	input, err := utils.ReadFile("test_input")
+	if err != nil {
+		t.Fail()
+	}
 	tests := []struct {
 		name    string
 		args    args
-		want    int
+		want    string
 		wantErr bool
 	}{
 		{
-			name: "Part2 - should return ",
-			args: args{[]string{
-				"",
-			}},
-			want:    0,
+			name:    "Part2 - should return ",
+			args:    args{input},
+			want:    "MCD",
 			wantErr: false,
-		},
-		{
-			name: "Part2 - should return error",
-			args: args{[]string{
-				"",
-			}},
-			want:    0,
-			wantErr: true,
 		},
 	}
 	for _, tt := range tests {
