@@ -9,8 +9,8 @@ import (
 	"golang.org/x/exp/slices"
 )
 
-func Solve(fileContents []string) ([]int, error) {
-	var results []int
+func Solve(fileContents []string) ([]string, error) {
+	var results []string
 
 	solution, err := solvePart1(fileContents)
 
@@ -18,7 +18,7 @@ func Solve(fileContents []string) ([]int, error) {
 		return nil, err
 	}
 
-	results = append(results, solution)
+	results = append(results, fmt.Sprintf("%d", solution))
 
 	fmt.Printf("Part 1 Solution: %v\n", solution)
 
@@ -28,7 +28,7 @@ func Solve(fileContents []string) ([]int, error) {
 		return nil, err
 	}
 
-	results = append(results, solution)
+	results = append(results, fmt.Sprintf("%d", solution))
 
 	fmt.Printf("Part 2 Solution: %v\n", solution)
 	return results, nil

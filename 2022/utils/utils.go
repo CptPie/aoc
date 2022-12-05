@@ -19,8 +19,12 @@ type Config struct {
 	Token string `json:"token"`
 }
 
-func ReadFile(day int) ([]string, error) {
-	file, err := os.Open(fmt.Sprintf("day%02d/input", day))
+type OutPut interface {
+	int | string
+}
+
+func ReadFile(path string) ([]string, error) {
+	file, err := os.Open(path)
 
 	if err != nil {
 		return nil, err
@@ -58,7 +62,7 @@ func GetConfig(path string) (Config, error) {
 	return config, nil
 }
 
-func SubmitSolutions(day int, results []int, configPath string) error {
+func SubmitSolutions[T OutPut](day int, results []T, configPath string) error {
 	for part, result := range results {
 		err := postSolution(configPath, day, part+1, result)
 		if err != nil {
@@ -68,7 +72,7 @@ func SubmitSolutions(day int, results []int, configPath string) error {
 	return nil
 }
 
-func postSolution(configPath string, day int, part int, solution int) error {
+func postSolution[T any](configPath string, day int, part int, solution T) error {
 
 	config, err := GetConfig(configPath)
 

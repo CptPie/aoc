@@ -5,6 +5,7 @@ import (
 	"2022/day02"
 	"2022/day03"
 	"2022/day04"
+	"2022/day05"
 	"2022/utils"
 	"errors"
 	"fmt"
@@ -56,9 +57,9 @@ func run(args args) {
 	}
 }
 
-func solve(day int) ([]int, error) {
+func solve(day int) ([]string, error) {
 	var err error
-	contents, err := utils.ReadFile(day)
+	contents, err := utils.ReadFile(fmt.Sprintf("day%02d/input", day))
 	if err != nil {
 		return nil, err
 	}
@@ -72,7 +73,7 @@ func solve(day int) ([]int, error) {
 	case 4:
 		return day04.Solve(contents)
 	case 5:
-		err = errors.New("solve for day 5 not implemented")
+		return day05.Solve(contents)
 	case 6:
 		err = errors.New("solve for day 6 not implemented")
 	case 7:
