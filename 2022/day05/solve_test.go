@@ -9,13 +9,20 @@ func Test_solvePart1(t *testing.T) {
 	type args struct {
 		fileContents []string
 	}
-	input, err := utils.ReadFile("test_input")
+
+	testInput, err := utils.ReadFile("test_input")
 	if err != nil {
-		t.Fail()
+		t.Errorf(err.Error())
 	}
-	input2, err := utils.ReadFile("test_input_2")
+
+	testInput2, err := utils.ReadFile("test_input_2")
 	if err != nil {
-		t.Fail()
+		t.Errorf(err.Error())
+	}
+
+	input, err := utils.ReadFile("input")
+	if err != nil {
+		t.Errorf(err.Error())
 	}
 
 	tests := []struct {
@@ -25,15 +32,21 @@ func Test_solvePart1(t *testing.T) {
 		wantErr bool
 	}{
 		{
-			name:    "Simple",
-			args:    args{input},
+			name:    "TestData_simple",
+			args:    args{testInput},
 			want:    "CMZ",
 			wantErr: false,
 		},
 		{
-			name:    "Complex",
-			args:    args{input2},
+			name:    "TestData_complex",
+			args:    args{testInput2},
 			want:    "MPQFNHSTN",
+			wantErr: false,
+		},
+		{
+			name:    "RealData",
+			args:    args{input},
+			want:    "QPJPLMNNR",
 			wantErr: false,
 		},
 	}
@@ -55,9 +68,15 @@ func Test_solvePart2(t *testing.T) {
 	type args struct {
 		fileContents []string
 	}
+
+	testInput, err := utils.ReadFile("test_input")
+	if err != nil {
+		t.Errorf(err.Error())
+	}
+
 	input, err := utils.ReadFile("test_input")
 	if err != nil {
-		t.Fail()
+		t.Errorf(err.Error())
 	}
 	tests := []struct {
 		name    string
@@ -66,9 +85,15 @@ func Test_solvePart2(t *testing.T) {
 		wantErr bool
 	}{
 		{
-			name:    "Part2 - should return ",
-			args:    args{input},
+			name:    "TestData",
+			args:    args{testInput},
 			want:    "MCD",
+			wantErr: false,
+		},
+		{
+			name:    "RealData",
+			args:    args{input},
+			want:    "BQDNWJPVJ",
 			wantErr: false,
 		},
 	}

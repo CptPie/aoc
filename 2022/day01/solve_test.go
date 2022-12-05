@@ -10,9 +10,14 @@ func Test_solvePart1(t *testing.T) {
 		fileContents []string
 	}
 
-	input, err := utils.ReadFile("test_input")
+	testInput, err := utils.ReadFile("test_input")
 	if err != nil {
-		t.Fail()
+		t.Errorf(err.Error())
+	}
+
+	input, err := utils.ReadFile("input")
+	if err != nil {
+		t.Errorf(err.Error())
 	}
 
 	tests := []struct {
@@ -22,9 +27,15 @@ func Test_solvePart1(t *testing.T) {
 		wantErr bool
 	}{
 		{
-			name:    "Find maximal Sum",
-			args:    args{input},
+			name:    "TestData",
+			args:    args{testInput},
 			want:    24000,
+			wantErr: false,
+		},
+		{
+			name:    "RealData",
+			args:    args{input},
+			want:    72511,
 			wantErr: false,
 		},
 	}
@@ -47,7 +58,12 @@ func Test_solvePart2(t *testing.T) {
 		fileContents []string
 	}
 
-	input, err := utils.ReadFile("test_input")
+	testInput, err := utils.ReadFile("test_input")
+	if err != nil {
+		t.Fail()
+	}
+
+	input, err := utils.ReadFile("input")
 	if err != nil {
 		t.Fail()
 	}
@@ -59,9 +75,15 @@ func Test_solvePart2(t *testing.T) {
 		wantErr bool
 	}{
 		{
-			name:    "Sum of 3 max sums",
-			args:    args{input},
+			name:    "TestData",
+			args:    args{testInput},
 			want:    45000,
+			wantErr: false,
+		},
+		{
+			name:    "RealData",
+			args:    args{input},
+			want:    212117,
 			wantErr: false,
 		},
 	}
