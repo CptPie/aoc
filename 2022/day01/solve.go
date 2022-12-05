@@ -67,14 +67,13 @@ func solvePart2(fileContents []string) (int, error) {
 
 	var sums []int
 	var values []int
-	for _, line := range fileContents {
+	for i, line := range fileContents {
 
 		if line == "" {
 			sum := 0
 			for _, v := range values {
 				sum += v
 			}
-
 			sums = append(sums, sum)
 
 			values = []int{}
@@ -84,11 +83,18 @@ func solvePart2(fileContents []string) (int, error) {
 				return 0, err
 			}
 			values = append(values, value)
-
+		}
+		if i == len(fileContents)-1 {
+			sum := 0
+			for _, v := range values {
+				sum += v
+			}
+			sums = append(sums, sum)
 		}
 	}
 
 	sort.Ints(sums)
+	fmt.Printf("%v\n", sums)
 	sum := 0
 	for _, val := range sums[len(sums)-3:] {
 		sum += val
