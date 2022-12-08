@@ -7,6 +7,7 @@ import (
 	"2022/day04"
 	"2022/day05"
 	"2022/day06"
+	"2022/day07"
 	"2022/utils"
 	"errors"
 	"fmt"
@@ -78,7 +79,7 @@ func solve(day int) ([]string, error) {
 	case 6:
 		return day06.Solve(contents)
 	case 7:
-		err = errors.New("solve for day 7 not implemented")
+		return day07.Solve(contents)
 	case 8:
 		err = errors.New("solve for day 8 not implemented")
 	case 9:
