@@ -230,8 +230,8 @@ func solvePart2(fileContents []string) (int, error) {
 
 	toDelete := required - totalFree
 
-	fmt.Printf("Used: %d/%d\n",totalUsed,fileSystemTotal)
-	fmt.Printf("We need %d, free is %d so we need to delete %d\n",required,totalFree,toDelete)
+	fmt.Printf("Used: %d/%d\n", totalUsed, fileSystemTotal)
+	fmt.Printf("We need %d, free is %d so we need to delete %d\n", required, totalFree, toDelete)
 
 	var candidates []Directory
 	for _, dir := range dirs {
@@ -246,8 +246,8 @@ func solvePart2(fileContents []string) (int, error) {
 	}
 
 	smallest := Directory{
-		Name:        "",
-		Files:       []File{
+		Name: "",
+		Files: []File{
 			dummyFile,
 		},
 		Directories: nil,
