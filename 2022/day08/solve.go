@@ -175,10 +175,6 @@ func solvePart2(fileContents []string) (int, error) {
 func analyzeTreeMapPart2(treeMap [][]Tree) ([][]Tree, error) {
 	for i := 1; i < len(treeMap)-1; i++ {
 		for j := 1; j < len(treeMap[i])-1; j++ {
-			if i == 3 && j == 2 {
-				_ = 1
-			}
-
 			tree := analyzeTree(i, j, treeMap)
 			treeMap[i][j] = tree
 		}
