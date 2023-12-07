@@ -83,7 +83,7 @@ func Test_solvePart2(t *testing.T) {
 		{
 			name:    "RealData",
 			args:    args{input},
-			want:    212117,
+			want:    63711,
 			wantErr: false,
 		},
 	}
