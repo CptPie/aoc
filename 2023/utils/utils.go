@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"golang.org/x/net/html"
 	"io"
 	"io/ioutil"
 	"net/http"
@@ -16,6 +17,8 @@ import (
 
 	"github.com/PuerkitoBio/goquery"
 )
+
+var NotImplementedError = errors.New("not implemented")
 
 type Config struct {
 	Token string `json:"token"`
@@ -94,6 +97,7 @@ func postSolution[T any](configPath string, year int, day int, part int, solutio
 
 	body := fmt.Sprintf("%s", out)
 	if strings.Contains(body, "Did you already complete it?") {
+		_ = requestDesc(config, year, day)
 		return errors.New(fmt.Sprintf("Day %v, Part %v: puzzle already completed", day, part))
 	}
 	if strings.Contains(body, "That's not the right answer.") {
@@ -101,6 +105,7 @@ func postSolution[T any](configPath string, year int, day int, part int, solutio
 	}
 
 	fmt.Printf("Successfully submitted Day %v Part %v\n", day, part)
+	_ = requestDesc(config, year, day)
 
 	return nil
 
@@ -163,13 +168,16 @@ func requestDesc(config Config, year int, day int) error {
 	}
 	doc, err := goquery.NewDocumentFromReader(resp.Body)
 
-	heading := doc.Find("article").Find("h2").Text()
-	doc.Find("article").Find("h2").Remove()
+	parts := doc.Find("article").Nodes
 
 	builder := strings.Builder{}
-
-	builder.WriteString(fmt.Sprintf("# %s\n", heading))
-	builder.WriteString(doc.Find("article").Text())
+	for _, part := range parts {
+		selector := goquery.Selection{Nodes: []*html.Node{part}}
+		heading := selector.Find("h2").Text()
+		selector.Find("h2").Remove()
+		builder.WriteString(fmt.Sprintf("# %s\n", heading))
+		builder.WriteString(selector.Text())
+	}
 
 	foldername := fmt.Sprintf("day%02d", day)
 

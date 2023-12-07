@@ -1,4 +1,4 @@
-package day01
+package day02
 
 import (
 	"aoc/2023/utils"
@@ -29,13 +29,13 @@ func Test_solvePart1(t *testing.T) {
 		{
 			name:    "TestData",
 			args:    args{testInput},
-			want:    209,
+			want:    8,
 			wantErr: false,
 		},
 		{
 			name:    "RealData",
 			args:    args{input},
-			want:    55172,
+			want:    2439,
 			wantErr: false,
 		},
 	}
@@ -77,7 +77,7 @@ func Test_solvePart2(t *testing.T) {
 		{
 			name:    "TestData",
 			args:    args{testInput},
-			want:    281,
+			want:    2286,
 			wantErr: false,
 		},
 		{

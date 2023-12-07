@@ -2,6 +2,7 @@ package main
 
 import (
 	"aoc/2023/day01"
+	"aoc/2023/day02"
 	"aoc/2023/utils"
 	"errors"
 	"fmt"
@@ -64,7 +65,7 @@ func run(args args) {
 
 func solve(day int) ([]string, error) {
 	var err error
-	contents, err := utils.ReadFile(fmt.Sprintf("%02d/day%02d/input", year, day))
+	contents, err := utils.ReadFile(fmt.Sprintf("day%02d/input", day))
 
 	if err != nil {
 		return nil, err
@@ -73,7 +74,7 @@ func solve(day int) ([]string, error) {
 	case 1:
 		return day01.Solve(contents)
 	case 2:
-		err = errors.New(fmt.Sprintf("solve for day %d not implemented", day))
+		return day02.Solve(contents)
 	case 3:
 		err = errors.New(fmt.Sprintf("solve for day %d not implemented", day))
 	case 4:
