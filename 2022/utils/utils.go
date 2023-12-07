@@ -104,6 +104,21 @@ func postSolution[T any](configPath string, day int, part int, solution T) error
 
 }
 
+func GetDayDesc(day int, path string) error {
+	config, err := GetConfig(path)
+
+	if err != nil {
+		return err
+	}
+
+	err = requestDesc(config, day)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
 func GetDayInput(day int, path string) error {
 	config, err := GetConfig(path)
 
