@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"strconv"
 	"strings"
+	"time"
 	"unicode"
 )
 
@@ -13,7 +14,10 @@ func Solve(fileContents []string) ([]string, error) {
 
 	var results []string
 
+	fmt.Println("Solving part 1")
+	start := time.Now()
 	solution, err := solvePart1(fileContents)
+	duration := time.Since(start)
 
 	if err != nil {
 		return nil, err
@@ -21,9 +25,12 @@ func Solve(fileContents []string) ([]string, error) {
 
 	results = append(results, fmt.Sprintf("%d", solution))
 
-	fmt.Printf("Part 1 Solution: %v\n", solution)
+	fmt.Printf("Part 1 Solution: %v\nSolve took: %v\n", solution, duration)
 
+	fmt.Println("Solving part 2")
+	start = time.Now()
 	solution, err = solvePart2(fileContents)
+	duration = time.Since(start)
 
 	if errors.Is(err, utils.NotImplementedError) {
 		return results, nil
@@ -33,7 +40,7 @@ func Solve(fileContents []string) ([]string, error) {
 
 	results = append(results, fmt.Sprintf("%d", solution))
 
-	fmt.Printf("Part 2 Solution: %v\n", solution)
+	fmt.Printf("Part 2 Solution: %v\nSolve took: %v\n", solution, duration)
 	return results, nil
 }
 

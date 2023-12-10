@@ -1,4 +1,4 @@
-package day02
+package day0
 
 import (
 	"aoc/2023/utils"
