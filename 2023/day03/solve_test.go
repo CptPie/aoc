@@ -81,13 +81,13 @@ func Test_solvePart2(t *testing.T) {
 		{
 			name:    "TestData",
 			args:    args{testInput},
-			want:    0,
+			want:    467835,
 			wantErr: false,
 		},
 		{
 			name:    "RealData",
 			args:    args{input},
-			want:    0,
+			want:    84883664,
 			wantErr: false,
 		},
 	}

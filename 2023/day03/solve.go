@@ -62,6 +62,10 @@ const (
 	Nil    EntryType = 2
 )
 
+type Gear struct {
+	Ratio int
+}
+
 func solvePart1(fileContents []string) (int, error) {
 
 	entries := generateEntries(fileContents)
@@ -89,40 +93,59 @@ func solvePart1(fileContents []string) (int, error) {
 	return sum, nil
 }
 
+func checkNeighbourhood(entry Entry, symbol Entry) bool {
+	// check vertical first
+	if symbol.Line == entry.Line || symbol.Line == entry.Line+1 || symbol.Line == entry.Line-1 {
+		// horizontal next
+		hdiff := 999
+		if entry.Start <= symbol.End && entry.End >= symbol.Start {
+			// it is "within" the bounds
+			hdiff = 0
+		}
+		if entry.Start-1 == symbol.End || entry.End+1 == symbol.Start {
+			hdiff = 1
+		}
+
+		if hdiff <= 1 {
+			return true
+		}
+	}
+	return false
+}
+
 func findValidNumbers(numbers []Entry, symbols []Entry) []Entry {
 	var filtered []Entry
 
 	for _, entry := range numbers {
 		for _, symbol := range symbols {
-			// check vertical first
-			if symbol.Line == entry.Line || symbol.Line == entry.Line+1 || symbol.Line == entry.Line-1 {
-				// horizontal next
-				hdiff := 999
-				if entry.Start <= symbol.End && entry.End >= symbol.Start {
-					// it is "within" the bounds
-					hdiff = 0
-				}
-				if entry.Start-1 == symbol.End || entry.End+1 == symbol.Start {
-					hdiff = 1
-				}
-
-				if hdiff <= 1 {
-					filtered = append(filtered, entry)
-				}
+			if checkNeighbourhood(entry, symbol) {
+				filtered = append(filtered, entry)
 			}
 		}
 	}
-
-	fmt.Println(len(filtered))
-	// for _, filterEntry := range filtered {
-	// 	fmt.Println(filterEntry.Value)
-	// }
 
 	return filtered
 }
 
 func solvePart2(fileContents []string) (int, error) {
-	return 0, utils.NotImplementedError
+	entries := generateEntries(fileContents)
+
+	var numbers []Entry
+	var symbols []Entry
+
+	for _, entry := range entries {
+		if entry.Type == Number {
+			numbers = append(numbers, entry)
+		} else {
+			symbols = append(symbols, entry)
+		}
+	}
+
+	filteredNumbers := findValidNumbers(numbers, symbols)
+
+	solution := findGears(filteredNumbers, symbols)
+
+	return solution, nil
 }
 
 func generateEntries(fileContents []string) []Entry {
@@ -195,4 +218,27 @@ func generateEntries(fileContents []string) []Entry {
 	}
 
 	return entries
+}
+
+func findGears(numbers []Entry, symbols []Entry) int {
+	sum := 0
+
+	for _, symbol := range symbols {
+		if symbol.Value == "*" {
+			nums := []int{}
+
+			for _, number := range numbers {
+				if checkNeighbourhood(number, symbol) {
+					num, _ := strconv.Atoi(number.Value)
+					nums = append(nums, num)
+				}
+			}
+
+			if len(nums) == 2 {
+				sum += nums[0] * nums[1]
+			}
+		}
+	}
+
+	return sum
 }
