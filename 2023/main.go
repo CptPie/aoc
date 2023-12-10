@@ -4,6 +4,7 @@ import (
 	"aoc/2023/day01"
 	"aoc/2023/day02"
 	"aoc/2023/day03"
+	"aoc/2023/day04"
 	"aoc/2023/utils"
 	"errors"
 	"fmt"
@@ -79,7 +80,7 @@ func solve(day int) ([]string, error) {
 	case 3:
 		return day03.Solve(contents)
 	case 4:
-		err = errors.New(fmt.Sprintf("solve for day %d not implemented", day))
+		return day04.Solve(contents)
 	case 5:
 		err = errors.New(fmt.Sprintf("solve for day %d not implemented", day))
 	case 6:
