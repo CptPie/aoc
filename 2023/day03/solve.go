@@ -97,15 +97,27 @@ func findValidNumbers(numbers []Entry, symbols []Entry) []Entry {
 			// check vertical first
 			if symbol.Line == entry.Line || symbol.Line == entry.Line+1 || symbol.Line == entry.Line-1 {
 				// horizontal next
-				if symbol.Start >= entry.Start-1 &&
-					symbol.Start <= entry.End+1 &&
-					symbol.End >= entry.Start-1 &&
-					symbol.End <= entry.End+1 {
+				hdiff := 999
+				if entry.Start <= symbol.End && entry.End >= symbol.Start {
+					// it is "within" the bounds
+					hdiff = 0
+				}
+				if entry.Start-1 == symbol.End || entry.End+1 == symbol.Start {
+					hdiff = 1
+				}
+
+				if hdiff <= 1 {
 					filtered = append(filtered, entry)
 				}
 			}
 		}
 	}
+
+	fmt.Println(len(filtered))
+	// for _, filterEntry := range filtered {
+	// 	fmt.Println(filterEntry.Value)
+	// }
+
 	return filtered
 }
 

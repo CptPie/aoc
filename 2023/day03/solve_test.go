@@ -35,7 +35,7 @@ func Test_solvePart1(t *testing.T) {
 		{
 			name:    "RealData",
 			args:    args{input},
-			want:    4,
+			want:    537732,
 			wantErr: false,
 		},
 	}
