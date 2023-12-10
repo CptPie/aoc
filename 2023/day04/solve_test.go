@@ -35,7 +35,7 @@ func Test_solvePart1(t *testing.T) {
 		{
 			name:    "RealData",
 			args:    args{input},
-			want:    1,
+			want:    17803,
 			wantErr: false,
 		},
 	}
@@ -81,13 +81,13 @@ func Test_solvePart2(t *testing.T) {
 		{
 			name:    "TestData",
 			args:    args{testInput},
-			want:    0,
+			want:    30,
 			wantErr: false,
 		},
 		{
 			name:    "RealData",
 			args:    args{input},
-			want:    0,
+			want:    01,
 			wantErr: false,
 		},
 	}
