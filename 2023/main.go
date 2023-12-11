@@ -5,6 +5,7 @@ import (
 	"aoc/2023/day02"
 	"aoc/2023/day03"
 	"aoc/2023/day04"
+	"aoc/2023/day05"
 	"aoc/2023/utils"
 	"errors"
 	"fmt"
@@ -17,8 +18,9 @@ const year = 2023
 type args struct {
 	Submit     bool   `arg:"-s, --submit" help:"Submit calculated results of the provided day"`
 	ConfigPath string `arg:"-c, --config" default:"config.json" help:"Path to the config file. Defaults to config.json"`
-	Download   bool   `arg:"-d,--download" help:"Downloads the puzzle input for [DAY]. If no day is provided it will download all available puzzle inputs"`
+	Download   bool   `arg:"-g,--get" help:"Downloads the puzzle input for [DAY]. If no day is provided it will download all available puzzle inputs"`
 	Test       bool   `arg:"-t, --test"`
+	Day        int    `arg:"-d"`
 }
 
 func main() {
@@ -30,33 +32,11 @@ func main() {
 }
 
 func run(args args) {
-
-	for i := 1; i < 25; i++ {
-		fmt.Printf("----- Day %d -----\n", i)
-		if args.Download {
-			fmt.Println("Downloading puzzle prompt")
-			err := utils.GetDayDesc(year, i, args.ConfigPath)
-			if err != nil {
-				fmt.Println(err)
-				return
-			}
-
-			fmt.Println("Downloading input file")
-			err = utils.GetDayInput(year, i, args.ConfigPath)
-			if err != nil {
-				fmt.Println(err)
-				return
-			}
-		}
-		fmt.Println("Solving")
-		results, err := solve(i)
-		if err != nil {
-			fmt.Println(err)
-			return
-		}
-		if args.Submit {
-			fmt.Println("Submitting results")
-			err = utils.SubmitSolutions(year, i, results, args.ConfigPath)
+	if args.Day != 0 {
+		runDay(args.Day, args)
+	} else {
+		for i := 1; i < 25; i++ {
+			err := runDay(i, args)
 			if err != nil {
 				fmt.Println(err)
 				return
@@ -65,10 +45,39 @@ func run(args args) {
 	}
 }
 
+func runDay(i int, args args) error {
+	fmt.Printf("----- Day %d -----\n", i)
+	if args.Download {
+		fmt.Println("Downloading puzzle prompt")
+		err := utils.GetDayDesc(year, i, args.ConfigPath)
+		if err != nil {
+			return err
+		}
+
+		fmt.Println("Downloading input file")
+		err = utils.GetDayInput(year, i, args.ConfigPath)
+		if err != nil {
+			return err
+		}
+	}
+	fmt.Println("Solving")
+	results, err := solve(i)
+	if err != nil {
+		return err
+	}
+	if args.Submit {
+		fmt.Println("Submitting results")
+		err = utils.SubmitSolutions(year, i, results, args.ConfigPath)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
 func solve(day int) ([]string, error) {
 	var err error
 	contents, err := utils.ReadFile(fmt.Sprintf("day%02d/input", day))
-
 	if err != nil {
 		return nil, err
 	}
@@ -82,7 +91,7 @@ func solve(day int) ([]string, error) {
 	case 4:
 		return day04.Solve(contents)
 	case 5:
-		err = errors.New(fmt.Sprintf("solve for day %d not implemented", day))
+		return day05.Solve(contents)
 	case 6:
 		err = errors.New(fmt.Sprintf("solve for day %d not implemented", day))
 	case 7:
