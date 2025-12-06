@@ -102,69 +102,77 @@ func solvePart1(fileContents []string) (int, error) {
 
 func solvePart2(fileContents []string) (int, error) {
 	count := 0
-
 	arrowPos := 50
 
 	for _, line := range fileContents {
-		zeroCrosses := 0
-		lastPos := arrowPos
+		var amount int
+		var err error
+		oldPos := arrowPos
+
 		if line[0] == 'R' {
-			// turning the dial right, in fact is just addition
-			amount, err := strconv.Atoi(line[1:])
+			amount, err = strconv.Atoi(line[1:])
 			if err != nil {
 				return 0, err
 			}
 
-			zeroCrosses = amount / 100
-			amount = amount % 100
+			newPos := oldPos + amount
+			arrowPos = newPos % 100
 
-			//			fmt.Printf("Old pos: %d, turning %c %d times, ", arrowPos, line[0], amount)
-
-			arrowPos += amount
-
-			// add wrap around, once we pass 100, roll back to 0
-			if arrowPos >= 100 {
-				if lastPos != 0 {
-					zeroCrosses++
-				}
-				arrowPos -= 100
+			// Count crossings DURING rotation (not including final position if it's 0)
+			crossings := 0
+			if newPos%100 == 0 && newPos > 0 {
+				// We land on 0, so don't count it as a crossing
+				crossings = (newPos / 100) - 1
+			} else {
+				crossings = newPos / 100
 			}
+			count += crossings
 
-			//			fmt.Printf("new pos: %d\n", arrowPos)
+			// If we land on 0, count it separately
+			if arrowPos == 0 {
+				count++
+			}
 
 		} else if line[0] == 'L' {
-			// turning the dial left, in fact is just subtraction
-			amount, err := strconv.Atoi(line[1:])
+			amount, err = strconv.Atoi(line[1:])
 			if err != nil {
 				return 0, err
 			}
 
-			zeroCrosses = amount / 100
-			amount = amount % 100
-			//			fmt.Printf("Old pos: %d, turning %c %d times, ", arrowPos, line[0], amount)
-			arrowPos -= amount
-
-			// wrap around - if we end up with a negative number, adjust the value (99-x)
-			if arrowPos < 0 {
-				if lastPos != 0 {
-					zeroCrosses++
+			// Count crossings going left
+			// Special case: if starting from 0 and going left, we don't cross 0 initially
+			if oldPos == 0 {
+				// Starting from 0: only count full rotations beyond the start
+				if amount >= 100 {
+					crossings := amount / 100
+					// But if we land back on 0, don't count it as a crossing
+					if amount%100 == 0 {
+						crossings--
+					}
+					count += crossings
 				}
-				arrowPos = 100 - int(math.Abs(float64(arrowPos)))
+			} else if amount > oldPos {
+				// We cross 0 at least once
+				crossings := 0
+				if (amount-oldPos)%100 == 0 {
+					// We land on 0, so don't count it as a crossing
+					crossings = (amount - oldPos) / 100
+				} else {
+					crossings = ((amount - oldPos - 1) / 100) + 1
+				}
+				count += crossings
 			}
 
-			//			fmt.Printf("new pos: %d", arrowPos)
+			arrowPos = ((oldPos-amount)%100 + 100) % 100
+
+			// If we land on 0, count it separately
+			if arrowPos == 0 {
+				count++
+			}
+
 		} else {
 			return 0, fmt.Errorf("Invalid line format, expected to start with L or R, got %s", line)
 		}
-
-		if arrowPos == 0 {
-			//			fmt.Println("Arrow at 0")
-			count++
-		} else {
-			//			fmt.Printf(" found %d zeroCrosses\n", zeroCrosses)
-			count += zeroCrosses
-		}
-
 	}
 
 	return count, nil
