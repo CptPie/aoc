@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"os"
 	"os/exec"
 	"strconv"
 	"time"
@@ -14,6 +15,7 @@ type args struct {
 	Submit   bool `arg:"-s, --submit" help:"Automatically submits solutions for unsolved problems"`
 	Download bool `arg:"-d, --download" help:"Automatically downloads puzzle input if not locally available"`
 	Test     bool `arg:"-t, --test" help:"Runs the tests for debugging purposes"`
+	TestVerb bool `arg:"-v, --testVerbose" help:"Runs the tests verbosely for debugging purposes"`
 }
 
 func main() {
@@ -58,14 +60,21 @@ func main() {
 		test = "-t"
 	}
 
-	out, err := exec.Command(
+	testVerbose := ""
+	if args.TestVerb {
+		testVerbose = "-v"
+	}
+
+	cmd := exec.Command(
 		"/bin/bash",
 		fmt.Sprintf("./%v/entrypoint.sh", args.Year),
 		dl,
 		submit,
-		test).Output()
-	if err != nil {
-		fmt.Printf("[Error]: %v", err)
-	}
-	fmt.Printf("%s\n", out)
+		test,
+		testVerbose)
+
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+
+	cmd.Run()
 }
