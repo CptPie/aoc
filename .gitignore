@@ -162,4 +162,4 @@ tags
 main
 aoc
 .idea
-/2023/config.json
+**/config.json
