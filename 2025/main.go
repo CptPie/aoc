@@ -2,6 +2,8 @@ package main
 
 import (
 	"aoc/2025/day01"
+	"aoc/2025/day02"
+	"aoc/2025/day03"
 	"aoc/2025/utils"
 	"errors"
 	"fmt"
@@ -14,9 +16,9 @@ const year = 2025
 type args struct {
 	Submit     bool   `arg:"-s, --submit" help:"Submit calculated results of the provided day"`
 	ConfigPath string `arg:"-c, --config" default:"config.json" help:"Path to the config file. Defaults to config.json"`
-	Download   bool   `arg:"-g,--get" help:"Downloads the puzzle input for [DAY]. If no day is provided it will download all available puzzle inputs"`
+	Download   bool   `arg:"-d,--download" help:"Downloads the puzzle input for [DAY]. If no day is provided it will download all available puzzle inputs"`
 	Test       bool   `arg:"-t, --test"`
-	Day        int    `arg:"-d"`
+	Day        int    `arg:"-n"`
 }
 
 func main() {
@@ -82,9 +84,9 @@ func solve(day int) ([]string, error) {
 	case 1:
 		return day01.Solve(contents)
 	case 2:
-		err = errors.New(fmt.Sprintf("solve for day %d not implemented", day))
+		return day02.Solve(contents)
 	case 3:
-		err = errors.New(fmt.Sprintf("solve for day %d not implemented", day))
+		return day03.Solve(contents)
 	case 4:
 		err = errors.New(fmt.Sprintf("solve for day %d not implemented", day))
 	case 5:
